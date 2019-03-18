@@ -18,6 +18,7 @@ func GetRedirect(w http.ResponseWriter, r *http.Request) {
 			body = "<html><head>" +
 				"<title>" + item.Description + "</title>" +
 				"<meta http-equiv=\"refresh\" content=\"0; URL=" + item.To + "\">" +
+				"<script>window.location.replace(\"" + item.To + "\");</script>" +
 				"</head><body>" +
 				"<p>Redirecting to <a href=\"" + item.To + "\">" + item.Description + "</a>...</p>" +
 				"</body></html>"
