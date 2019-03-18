@@ -17,7 +17,7 @@ func GetRedirect(w http.ResponseWriter, r *http.Request) {
 		if item.ID == params["id"] {
 			body = "<html><head>" +
 				"<title>" + item.Description + "</title>" +
-				"<meta http-equiv=\"refresh\" content=\"4; URL=" + item.To + "\">" +
+				"<meta http-equiv=\"refresh\" content=\"0; URL=" + item.To + "\">" +
 				"</head><body>" +
 				"<p>Redirecting to <a href=\"" + item.To + "\">" + item.Description + "</a>...</p>" +
 				"</body></html>"
@@ -27,7 +27,7 @@ func GetRedirect(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetUrls() (urls []model.Url) {
+func GetUrls() []model.Url {
 	return urls
 }
 
