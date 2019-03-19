@@ -3,7 +3,6 @@ package common
 import (
 	"../model"
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
 )
@@ -12,20 +11,20 @@ var urls []model.Url
 
 func GetRedirect(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	var body = ""
+//	var body = ""
 	for _, item := range urls {
 		if item.ID == params["id"] {
-			body = "<html><head>" +
+		/*	body = "<html><head>" +
 				"<title>" + item.Description + "</title>" +
 				"<meta http-equiv=\"refresh\" content=\"0; URL=" + item.To + "\">" +
 				"<script>window.location.replace(\"" + item.To + "\");</script>" +
 				"</head><body>" +
 				"<p>Redirecting to <a href=\"" + item.To + "\">" + item.Description + "</a>...</p>" +
-				"</body></html>"
+				"</body></html>" */
+			http.Redirect(w, r, item.To, 301)
 		}
 	}
-	fmt.Fprintf(w, body)
-
+//	fmt.Fprintf(w, body)
 }
 
 func GetUrls() []model.Url {
