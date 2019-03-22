@@ -22,6 +22,7 @@ func main() {
 
 	router.HandleFunc("/urls", common.GetRedirectInfos).Methods("GET")
 	router.HandleFunc("/{id}", common.GetRedirect).Methods("GET")
+	router.HandleFunc("/{id}", common.CreateRedirect).Methods("POST")
 	router.HandleFunc("/{id}/info", common.GetRedirectInfo).Methods("GET")
 
 	http.Handle("/", router)
