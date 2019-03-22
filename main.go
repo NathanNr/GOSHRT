@@ -24,5 +24,5 @@ func main() {
 	router.HandleFunc("/{id}/info", common.GetRedirectInfo).Methods("GET")
 
 	http.Handle("/", router)
-	http.ListenAndServe(":8080", nil)
+	_ = http.ListenAndServe(":8080", nil)
 }

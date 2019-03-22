@@ -26,27 +26,30 @@ func GetRedirect(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, item.To, 301)
 		}
 	}
+	http.NotFound(w, r)
 }
 
 func CreateRedirect(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	var url model.Url
 	_ = json.NewDecoder(r.Body).Decode(&url)
 	AddUrl(url)
-	json.NewEncoder(w).Encode(url)
+	_ = json.NewEncoder(w).Encode(url)
 }
 
 func GetRedirectInfo(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(r)
 	for _, item := range urls {
 		if item.ID == params["id"] {
-			json.NewEncoder(w).Encode(item)
+			_ = json.NewEncoder(w).Encode(item)
 			return
 		}
 	}
-	json.NewEncoder(w).Encode(&model.Url{})
+	http.NotFound(w, r)
 }
 
 func GetRedirectInfos(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(urls)
+	_ = json.NewEncoder(w).Encode(urls)
 }
