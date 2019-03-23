@@ -28,10 +28,12 @@ func RemoveUrl (urlIdToRemove string) {
 }
 
 func GetRedirect(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Cache-Control", "private, max-age=90")
 	params := mux.Vars(r)
 	for _, item := range urls {
 		if item.ID == params["id"] {
 			http.Redirect(w, r, item.To, 301)
+			return
 		}
 	}
 	http.NotFound(w, r)
