@@ -21,7 +21,8 @@ func main() {
 	router.HandleFunc("/get-token", common.GetToken).Methods("GET")
 
 	router.Handle("/redirects", common.IsAuthorized(common.GetRedirectInfos)).Methods("GET")
-	router.Handle("/createredirect", common.IsAuthorized(common.CreateRedirect)).Methods("POST")
+	router.Handle("/redirect", common.IsAuthorized(common.CreateRedirect)).Methods("POST")
+	router.Handle("/redirect/{id}", common.IsAuthorized(common.DeleteRedirect)).Methods("DELETE")
 	router.HandleFunc("/{id}", common.GetRedirect).Methods("GET")
 	router.HandleFunc("/{id}/info", common.GetRedirectInfo).Methods("GET")
 

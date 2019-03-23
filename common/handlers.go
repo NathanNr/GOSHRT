@@ -19,6 +19,14 @@ func AddUrl (urlToAdd model.Url) {
 	urls = append(urls, urlToAdd)
 }
 
+func RemoveUrl (urlIdToRemove string) {
+	for i, item := range urls {
+		if item.ID == urlIdToRemove {
+			urls[i] = model.Url{}
+		}
+	}
+}
+
 func GetRedirect(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	for _, item := range urls {
@@ -35,6 +43,7 @@ func CreateRedirect(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewDecoder(r.Body).Decode(&url)
 	AddUrl(url)
 	_ = json.NewEncoder(w).Encode(url)
+	w.WriteHeader(http.StatusCreated)
 }
 
 func GetRedirectInfo(w http.ResponseWriter, r *http.Request) {
@@ -52,4 +61,10 @@ func GetRedirectInfo(w http.ResponseWriter, r *http.Request) {
 func GetRedirectInfos(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	_ = json.NewEncoder(w).Encode(urls)
+}
+
+func DeleteRedirect(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	RemoveUrl(params["id"])
+	w.WriteHeader(http.StatusNoContent)
 }
