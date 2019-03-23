@@ -18,8 +18,10 @@ func main() {
 	common.AddUrl(model.Url{To: "https://example.com", Description: "Example"})
 	common.AddUrl(model.Url{To: "https://www.icann.org", Description: "Icann"})
 
-	router.HandleFunc("/redirects", common.GetRedirectInfos).Methods("GET")
-	router.HandleFunc("/createredirect", common.CreateRedirect).Methods("POST")
+	router.HandleFunc("/get-token", common.GetToken).Methods("GET")
+
+	router.Handle("/redirects", common.IsAuthorized(common.GetRedirectInfos)).Methods("GET")
+	router.Handle("/createredirect", common.IsAuthorized(common.CreateRedirect)).Methods("POST")
 	router.HandleFunc("/{id}", common.GetRedirect).Methods("GET")
 	router.HandleFunc("/{id}/info", common.GetRedirectInfo).Methods("GET")
 
