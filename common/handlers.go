@@ -12,14 +12,14 @@ import (
 var urlCount = 0
 var urls []model.Url
 
-func AddUrl (urlToAdd model.Url) {
+func AddUrl(urlToAdd model.Url) {
 	urlCount = urlCount + 1
 	urlToAdd.ID = strconv.Itoa(urlCount)
 	urlToAdd.Creationtime = time.Now().Unix()
 	urls = append(urls, urlToAdd)
 }
 
-func RemoveUrl (urlIdToRemove string) {
+func RemoveUrl(urlIdToRemove string) {
 	for i, item := range urls {
 		if item.ID == urlIdToRemove {
 			urls[i] = model.Url{}
