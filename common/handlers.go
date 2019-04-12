@@ -4,6 +4,7 @@ import (
 	"../model"
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -53,7 +54,11 @@ func GetRedirectInfo(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	for _, item := range urls {
 		if item.ID == params["id"] {
-			_ = json.NewEncoder(w).Encode(item)
+			err := json.NewEncoder(w).Encode(item)
+			if err != nil {
+				log.Fatal(err)
+				w.WriteHeader(http.StatusInternalServerError)
+			}
 			return
 		}
 	}
@@ -62,7 +67,11 @@ func GetRedirectInfo(w http.ResponseWriter, r *http.Request) {
 
 func GetRedirectInfos(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	_ = json.NewEncoder(w).Encode(urls)
+	err := json.NewEncoder(w).Encode(urls)
+	if err != nil {
+		log.Fatal(err)
+		w.WriteHeader(http.StatusInternalServerError)
+	}
 }
 
 func DeleteRedirect(w http.ResponseWriter, r *http.Request) {

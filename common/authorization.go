@@ -3,6 +3,7 @@ package common
 import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -14,8 +15,14 @@ func GetToken(w http.ResponseWriter, r *http.Request) {
 	validToken, err := GenerateJWT("get-token", 60)
 	if err != nil {
 		fmt.Println("Failed to generate token")
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
-	fmt.Fprintf(w, validToken)
+	_, err = fmt.Fprintf(w, validToken)
+	if err != nil {
+		log.Fatal(err)
+		w.WriteHeader(http.StatusInternalServerError)
+	}
 }
 
 func GenerateJWT(client string, exp time.Duration) (string, error) {
@@ -46,17 +53,17 @@ func IsAuthorized(endpoint func(http.ResponseWriter, *http.Request)) http.Handle
 			})
 
 			if err != nil {
-				fmt.Fprintf(w, err.Error())
-				fmt.Fprint(w, "\n")
+				w.WriteHeader(http.StatusInternalServerError)
+				return
 			}
 
 			if token.Valid {
 				endpoint(w, r)
 			} else {
-				http.Error(w, "403 forbidden", 403)
+				w.WriteHeader(http.StatusForbidden)
 			}
 		} else {
-			http.Error(w, "401 unauthorized", 401)
+			w.WriteHeader(http.StatusUnauthorized)
 		}
 	})
 }
