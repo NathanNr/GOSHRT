@@ -5,11 +5,12 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 )
 
-var fmtSecret = []byte("secret") // TODO
+var fmtSecret = []byte(os.Getenv("GOSHRT_SECRET"))
 
 func GetToken(w http.ResponseWriter, r *http.Request) {
 	validToken, err := GenerateJWT("get-token", 60)
