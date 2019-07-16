@@ -1,7 +1,7 @@
 package common
 
 import (
-	"../model"
+	"github.com/NathanNr/GOSHRT/model"
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"log"

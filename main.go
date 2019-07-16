@@ -5,8 +5,8 @@ import (
 	"github.com/gorilla/mux"
 	"net/http"
 
-	"./common"
-	"./model"
+	"github.com/NathanNr/GOSHRT/common"
+	"github.com/NathanNr/GOSHRT/model"
 )
 
 var router = mux.NewRouter()
