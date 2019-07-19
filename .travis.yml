@@ -3,3 +3,9 @@ language: go
 go:
   - 1.11.x
   - master
+
+services:
+  - docker
+
+script:
+  - docker-compose up -d --build
