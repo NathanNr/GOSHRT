@@ -3,5 +3,7 @@ version: '3.0'
 services:
   goshrt:
     build: .
+    environment:
+      - GOSHRT_SECRET=mysecret
     ports:
-    - "8080:8080"
+      - "8080:8080"
