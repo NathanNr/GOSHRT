@@ -1,11 +1,18 @@
-# Git
-.git/
-.gitignore
+# Binarys
+*.exe
+*.test
+
+# Configs
+.travis.yml
+docker-compose.yml
+
+# Docs
+*.md
 
 # Editors and IDEs
 .idea/
 out/
 
-# Binarys
-*.exe
-*.test
+# Git
+.git/
+.gitignore
